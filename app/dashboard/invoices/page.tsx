@@ -1,5 +1,12 @@
 import React from "react";
+import { lusitana } from "@/app/ui/fonts";
 
 export default function Page() {
-  return <div>Invoices page</div>;
+  return (
+    <div>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+        Invoices page
+      </h1>
+    </div>
+  );
 }
