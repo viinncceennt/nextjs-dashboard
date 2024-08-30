@@ -3,14 +3,17 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 // replace function from useRouter hook is used to update the link path
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function Search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function handleSearch(term: string) {
+  // add a 330ms delay to the search input
+  const handleSearch = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
+    params.set("page", "1");
     if (term) {
       params.set("query", term);
     } else {
@@ -19,7 +22,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
     // updtate the link path with the new search term
     replace(`${pathname}?${params.toString()}`);
-  }
+  }, 300);
 
   return (
     <div className="relative flex flex-1 flex-shrink-0">
